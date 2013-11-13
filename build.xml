@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+  build.xml
+
+  Mad Physicist JForm Project
+
+  The MIT License (MIT)
+
+  Copyright (c) 2013 by Joseph Fox-Rabinovitz
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  THE SOFTWARE.
+-->
+
+<!--
+  The main build file for the JForm project. Type "ant -projecthelp" for a
+  listing of the available targets. The project build and documentation can be
+  run with the "all" target. There are currently no test targets.
+
+  Author:   Joseph Fox-Rabinovitz
+  Version:  1.0.0.0, 12 Nov 2013
+  Since:    1.0.0.0
+-->
+
+<project name="JForm" default="all" basedir=".">
+
+    <description>Builds, documents and demos JForm.</description>
+
+    <property file="build.properties" />
+
+    <path id="dependencies">
+        <pathelement location="${tools.jar.file}" />
+    </path>
+
+    <!-- Library Build Targets -->
+
+    <target name="clean"
+            description="removes all build artifacts, including documentation">
+        <!-- doc.dir and jar.file are not necessarily in dist.dir -->
+        <delete dir="${doc.dir}" />
+        <delete file="${jar.file}" />
+        <delete dir="${build.dir}" />
+        <delete dir="${dist.dir}" />
+    </target>
+
+    <target name="compile"
+            description="compiles the library source code into class files">
+        <mkdir dir="${classes.dir}" />
+        <javac classpathref="dependencies"
+               srcdir="${src.dir}"
+               destdir="${classes.dir}"
+               excludes="**/package-info.java"
+               includeantruntime="false"
+               debug="true">
+            <compilerarg value="-Xlint:all" />
+        </javac>
+        <copy todir="${classes.dir}">
+            <fileset dir="${src.dir}" excludes="**/*.java"/>
+        </copy>
+    </target>
+
+    <target name="clean-compile"
+            description="removes all compiled application classes">
+        <delete dir="${classes.dir}" />
+    </target>
+
+    <target name="jar" depends="compile"
+            description="bundles the compiled classes into an executable jar file">
+        <mkdir dir="${jar.dir}" />
+        <jar destfile="${jar.file}"
+             basedir="${classes.dir}"
+             excludes="">
+            <!--manifest>
+                <attribute name="Main-Class" value="${demo.class}" />
+            </manifest-->
+        </jar>
+    </target>
+
+    <target name="clean-jar"
+            description="Removes the application jar file">
+        <!-- Do not delete directory, javadoc may still be there -->
+        <delete file="${jar.file}" />
+    </target>
+
+    <target name="doc" depends="compile"
+            description="creates javadoc documentation of the application classes">
+        <mkdir dir="${doc.dir}" />
+        <javadoc sourcepath="${src.dir}"
+                 destdir="${doc.dir}"
+                 classpath="${classes.dir}"
+                 access="private"
+                 encoding="UTF-8"
+                 version="true"
+                 author="true"
+                 windowtitle="JForm Project - Library Developer Documentation"
+                 source="1.7"
+                 serialwarn="true"
+                 use="true">
+            <doctitle><![CDATA[JForm Project<br />API Specification]]></doctitle>
+            <header><![CDATA[<b>JForm Project<br />Library</b>]]></header>
+            <footer><![CDATA[<b>JForm Project<br />Library</b>]]></footer>
+            <bottom><![CDATA[Copyright &copy; 2013 by Joseph Fox-Rabinovitz under the MIT License]]></bottom>
+            <link href="http://docs.oracle.com/javase/7/docs/api/" offline="false" />
+            <sourcepath location="${src.dir}" />
+            <classpath>
+                <path refid="dependencies" />
+                <path location="${classes.dir}" />
+            </classpath>
+        </javadoc>
+    </target>
+
+    <target name="clean-doc"
+            description="removes javadoc documentation of the the classes">
+        <delete dir="${doc.dir}" />
+    </target>
+
+    <!-- Demo Run Targets -->
+
+    <target name="run-demo" depends="jar"
+            description="runs the demo application">
+        <java fork="true" classname="${demo.class}">
+            <classpath>
+                <pathelement location="${jar.file}" />
+                <path refid="dependencies" />
+            </classpath>
+        </java>
+    </target>
+
+    <!-- Meta-Targets -->
+
+    <target name="rebuild" depends="clean,jar"
+            description="rebuilds the jar from scratch after a clean" />
+
+    <target name="all" depends="clean,jar,doc"
+            description="cleans the project and creates all build, distribution and documentation artifacts" />
+
+</project>
+
