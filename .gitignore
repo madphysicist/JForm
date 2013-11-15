@@ -37,3 +37,8 @@ build/
 dist/
 lib/
 
+
+.netbeans/build/
+.netbeans/dist/
+.netbeans/nbproject/private/
+
