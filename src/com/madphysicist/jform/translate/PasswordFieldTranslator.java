@@ -118,7 +118,7 @@ public class PasswordFieldTranslator implements Translator<char[], JPasswordFiel
      * @param uiComponent {@inheritDoc}
      * @return {@inheritDoc}
      * @throws TranslatorException {@inheritDoc}
-     * @see #readString(JTextComponent)
+     * @see #readString(JPasswordField)
      * @since 1.0.0
      */
     @Override public char[] readValue(JPasswordField uiComponent) throws TranslatorException
