@@ -33,5 +33,6 @@
  *
  * @author Joseph Fox-Rabinovitz
  * @version 1.0.0, 25 May 2013: Joseph Fox-Rabinovitz: Created
+ * @version 1.0.1, 26 Nov 2013: Joseph Fox-Rabinovitz: Added PasswordFieldTranslator
  */
 package com.madphysicist.jform.translate;
