@@ -38,6 +38,7 @@ import javax.swing.text.JTextComponent;
  * extensions of this class.
  * @author Joseph Fox-Rabinovitz
  * @version 1.0.0, 26 May 2013: Joseph Fox-Rabinovitz: Created
+ * @version 1.0.1, 26 May 2013: Joseph Fox-Rabinovitz: Added NonEmptyString
  */
 public abstract class TextComponentTranslator<T> implements Translator<T, JTextComponent>
 {
@@ -151,6 +152,77 @@ public abstract class TextComponentTranslator<T> implements Translator<T, JTextC
          * @since 1.0.0
          */
         public static synchronized String getInstance()
+        {
+            return instance;
+        }
+    }
+
+    /**
+     * Reads non-empty strings from text components and vice versa. This class
+     * follows a singleton pattern because it has no state.
+     *
+     * @author Joseph Fox-Rabinovitz
+     * @version 1.0.0, 26 Nov 2013: Joseph Fox-Rabinovitz: Created
+     * @since 1.0.1
+     */
+    @SuppressWarnings("PublicInnerClass")
+    public static class NonEmptyString extends TextComponentTranslator.String
+    {
+        /**
+         * The version ID for serialization.
+         *
+         * @serial Increment the least significant three digits when
+         * compatibility is not compromised by a structural change (e.g. adding
+         * a new field with a sensible default value), and the upper digits when
+         * the change makes serialized versions of of the class incompatible
+         * with previous releases.
+         * @since 1.0.0
+         */
+        private static final long serialVersionUID = 1000L;
+
+        /**
+         * The singleton instance of this class.
+         *
+         * @see #getInstance()
+         * @since 1.0.0
+         */
+        private static final NonEmptyString instance = new NonEmptyString();
+
+        /**
+         * An empty constructor. This constructor is not private to allow
+         * subclassing.
+         *
+         * @since 1.0.0
+         */
+        protected NonEmptyString() {}
+
+        /**
+         * Returns the raw contents of the text component, if it is not empty.
+         * This method yields identical results to {@code readString()}.
+         *
+         * @param uiComponent {@inheritDoc}
+         * @return {@inheritDoc}
+         * @throws TranslatorException if the contents of the component are
+         * empty.
+         * @see #readString(JTextComponent)
+         * @since 1.0.0
+         */
+        @Override public java.lang.String readValue(JTextComponent uiComponent) throws TranslatorException
+        {
+            java.lang.String str = uiComponent.getText();
+            if(str == null || str.isEmpty()) {
+                throw new TranslatorException("Empty string", this, uiComponent);
+            }
+            return str;
+        }
+
+        /**
+         * Retrieves the singleton instance of this class.
+         *
+         * @return the singleton of this class.
+         * @since 1.0.0
+         */
+        public static synchronized NonEmptyString getInstance()
         {
             return instance;
         }
