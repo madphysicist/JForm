@@ -33,6 +33,12 @@
   listing of the available targets. The project build and documentation can be
   run with the "all" target. There are currently no test targets.
 
+
+  Set the value of the "DEBUG" property near the top of this file to determine
+  whether the library will be compiled in debug mode or not. The "DEBUG-test"
+  property determines the same thing for the test classes. It is normally set
+  to the same value as "DEBUG".
+
   Author:   Joseph Fox-Rabinovitz
   Version:  1.0.0.0, 12 Nov 2013
   Since:    1.0.0.0
@@ -42,6 +48,9 @@
 
     <description>Builds, documents and demos JForm.</description>
 
+    <property name="DEBUG" value="true" />
+    <property name="DEBUG-test" value="${DEBUG}" />
+
     <property file="build.properties" />
 
     <path id="dependencies">
@@ -50,13 +59,11 @@
 
     <!-- Library Build Targets -->
 
-    <target name="clean"
+    <target name="clean" depends="clean-compile,clean-doc,clean-jar"
             description="removes all build artifacts, including documentation">
-        <!-- doc.dir and jar.file are not necessarily in dist.dir -->
-        <delete dir="${doc.dir}" />
-        <delete file="${jar.file}" />
         <delete dir="${build.dir}" />
         <delete dir="${dist.dir}" />
+        <delete dir="${jar.dir}" />
     </target>
 
     <target name="compile"
@@ -67,7 +74,7 @@
                destdir="${classes.dir}"
                excludes="**/package-info.java"
                includeantruntime="false"
-               debug="true">
+               debug="${DEBUG}">
             <compilerarg value="-Xlint:all" />
         </javac>
         <copy todir="${classes.dir}">
@@ -76,7 +83,7 @@
     </target>
 
     <target name="clean-compile"
-            description="removes all compiled application classes">
+            description="removes all compiled library classes">
         <delete dir="${classes.dir}" />
     </target>
 
@@ -93,13 +100,12 @@
     </target>
 
     <target name="clean-jar"
-            description="Removes the application jar file">
-        <!-- Do not delete directory, javadoc may still be there -->
+            description="Removes the library jar file">
         <delete file="${jar.file}" />
     </target>
 
     <target name="doc" depends="compile"
-            description="creates javadoc documentation of the application classes">
+            description="creates javadoc documentation of the library classes">
         <mkdir dir="${doc.dir}" />
         <javadoc sourcepath="${src.dir}"
                  destdir="${doc.dir}"
@@ -125,9 +131,33 @@
         </javadoc>
     </target>
 
-    <target name="clean-doc"
+    <target name="clean-doc" depends="clean-doc-jar"
             description="removes javadoc documentation of the the classes">
         <delete dir="${doc.dir}" />
+    </target>
+
+    <target name="doc-jar" depends="doc"
+            description="packages the library javadoc into a jar file">
+        <jar destfile="${doc.jar}"
+             basedir="${doc.dir}"
+             excludes="" />
+    </target>
+
+    <target name="clean-doc-jar"
+            description="removes the packaged library javadoc">
+        <delete file="${doc.jar}" />
+    </target>
+
+    <target name="src-jar"
+            description="packages the library source code into a jar file">
+        <jar destfile="${src.jar}"
+             basedir="${src.dir}"
+             excludes="" />
+    </target>
+
+    <target name="clean-src-jar"
+            description="removes the packaged library source code">
+        <delete file="${doc.jar}" />
     </target>
 
     <!-- Demo Run Targets -->
@@ -144,11 +174,11 @@
 
     <!-- Meta-Targets -->
 
-    <target name="rebuild" depends="clean,jar"
+    <target name="rebuild" depends="clean-compile,clean-jar,jar"
             description="rebuilds the jar from scratch after a clean" />
 
-    <target name="all" depends="clean,jar,doc"
-            description="cleans the project and creates all build, distribution and documentation artifacts" />
+    <target name="all" depends="clean,jar,doc-jar,src-jar"
+            description="cleans the project and creates all build, distribution, source, and documentation artifacts" />
 
 </project>
 
