@@ -84,7 +84,8 @@ then
 elif [ ${#} -ne 0 ]
 then
     echo "Usage: ${0} [-u]"
-    echo "    -u ininstalls JForm"
+    echo "    no argument installs JForm"
+    echo "    -u uninstalls JForm"
     exit 1
 else
     inst "${ISRC}" "-sources"
