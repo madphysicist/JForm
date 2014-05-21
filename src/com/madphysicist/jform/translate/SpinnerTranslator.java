@@ -47,6 +47,17 @@ import javax.swing.SpinnerNumberModel;
 public abstract class SpinnerTranslator<T> implements Translator<T, JSpinner>
 {
     /**
+     * The version ID for serialization.
+     *
+     * @serial Increment the least significant three digits when compatibility
+     * is not compromised by a structural change (e.g. adding a new field with
+     * a sensible default value), and the upper digits when the change makes
+     * serialized versions of of the class incompatible with previous releases.
+     * @since 1.0.0
+     */
+	private static final long serialVersionUID = 1000L;
+
+	/**
      * Returns a string representation of the value in the spinner. The value is
      * converted directly using its {@code toString()} method. Subclasses should
      * override this method if a less generic implementation is required.
@@ -99,7 +110,6 @@ public abstract class SpinnerTranslator<T> implements Translator<T, JSpinner>
      * @version 1.0.0, 20 June 2013: Joseph Fox-Rabinovitz: Created
      * @since 1.0.0
      */
-    @SuppressWarnings("PublicInnerClass")
     public static class Double extends SpinnerTranslator<java.lang.Double>
     {
         /**
@@ -210,7 +220,6 @@ public abstract class SpinnerTranslator<T> implements Translator<T, JSpinner>
      * @version 1.0.0, 20 June 2013: Joseph Fox-Rabinovitz: Created
      * @since 1.0.0
      */
-    @SuppressWarnings("PublicInnerClass")
     public static class Integer extends SpinnerTranslator<java.lang.Integer>
     {
         /**

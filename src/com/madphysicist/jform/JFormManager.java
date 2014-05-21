@@ -1244,7 +1244,6 @@ public class JFormManager implements Serializable
      * read.
      * @since 1.0.0
      */
-    @SuppressWarnings("unchecked")
     public Map<String, Object> exportConfig(boolean notify) throws TranslatorException
     {
         HashMap<String, Object> result = new HashMap<>();
@@ -1822,16 +1821,16 @@ public class JFormManager implements Serializable
             this.listeners = new HashSet<>(componentConfig.getListeners());
         }
 
-        /**
+        /* *
          * Returns the name of the property.
          *
          * @return the name of the property.
          * @since 1.0.0
-         */
+         * /
         public String getName()
         {
             return this.name;
-        }
+        }*/
 
         /**
          * Returns the current value of the property.

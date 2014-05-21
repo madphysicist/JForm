@@ -78,7 +78,7 @@ import com.madphysicist.tools.swing.JFileField;
  * <li>JColorButton</li>
  * <li>JFileField</li>
  * </ul>
- * The default instance can be retreived and modified, but the lowest level set
+ * The default instance can be retrieved and modified, but the lowest level set
  * of mappings can not.
  *
  * @author Joseph Fox-Rabinovitz
@@ -97,7 +97,6 @@ public class ConverterFactory
      * @version 1.0.0, 27 May 2013
      * @since 1.0.0
      */
-    @SuppressWarnings("PublicInnerClass")
     public static interface MarkupConfiguration
     {
         /**
@@ -316,7 +315,6 @@ public class ConverterFactory
      * @param config the error markup configuration to register.
      * @since 1.0.0
      */
-    @SuppressWarnings("unchecked")
     public void registerConfiguration(Class<? extends Component> type, MarkupConfiguration config)
     {
         configs.put(type, config);
@@ -390,7 +388,7 @@ public class ConverterFactory
      * @see #getValue(Class)
      * @since 1.0.0
      */
-    @SuppressWarnings({"AssignmentToMethodParameter", "unchecked"})
+    @SuppressWarnings("unchecked")
     private MarkupConfiguration findConfiguration(Class<? extends Component> componentClass)
     {
         while(componentClass != Component.class) {
@@ -463,7 +461,7 @@ public class ConverterFactory
         DEFAULT_CONFIGS.put(JComboBox.class, new MarkupConfiguration() {
             @Override public List<Component> getForegrounds(Component component) { return null; }
             @Override public List<Component> getBackgrounds(Component component) {
-                return asList(((JComboBox)component).getEditor().getEditorComponent()); }
+                return asList(((JComboBox<?>)component).getEditor().getEditorComponent()); }
         });
         DEFAULT_CONFIGS.put(JSpinner.class, new MarkupConfiguration() {
             @Override public List<Component> getForegrounds(Component component) { return null; }

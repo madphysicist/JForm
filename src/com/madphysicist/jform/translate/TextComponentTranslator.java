@@ -43,6 +43,17 @@ import javax.swing.text.JTextComponent;
 public abstract class TextComponentTranslator<T> implements Translator<T, JTextComponent>
 {
     /**
+     * The version ID for serialization.
+     *
+     * @serial Increment the least significant three digits when compatibility
+     * is not compromised by a structural change (e.g. adding a new field with
+     * a sensible default value), and the upper digits when the change makes
+     * serialized versions of of the class incompatible with previous releases.
+     * @since 1.0.0
+     */
+	private static final long serialVersionUID = 1000L;
+
+	/**
      * Writes a {@code String} representation of the specified value into the
      * specified {@code JTextComponent}.
      *
@@ -99,7 +110,6 @@ public abstract class TextComponentTranslator<T> implements Translator<T, JTextC
      * @version 1.0.0, 26 May 2013
      * @since 1.0.0
      */
-    @SuppressWarnings("PublicInnerClass")
     public static class String extends TextComponentTranslator<java.lang.String>
     {
         /**
@@ -165,7 +175,6 @@ public abstract class TextComponentTranslator<T> implements Translator<T, JTextC
      * @version 1.0.0, 26 Nov 2013: Joseph Fox-Rabinovitz: Created
      * @since 1.0.1
      */
-    @SuppressWarnings("PublicInnerClass")
     public static class NonEmptyString extends TextComponentTranslator.String
     {
         /**
@@ -235,7 +244,6 @@ public abstract class TextComponentTranslator<T> implements Translator<T, JTextC
      * @version 1.0.0, 26 May 2013
      * @since 1.0.0
      */
-    @SuppressWarnings("PublicInnerClass")
     public static class Integer extends TextComponentTranslator<java.lang.Integer>
     {
         /**
@@ -310,7 +318,6 @@ public abstract class TextComponentTranslator<T> implements Translator<T, JTextC
      * @version 1.0.0, 26 May 2013
      * @since 1.0.0
      */
-    @SuppressWarnings("PublicInnerClass")
     public static class Double extends TextComponentTranslator<java.lang.Double>
     {
         /**

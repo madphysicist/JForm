@@ -130,7 +130,6 @@ public class FileFieldTranslator implements Translator<java.io.File, JFileField>
      * @version 1.0.0, 27 May 2013
      * @since 1.0.0
      */
-    @SuppressWarnings("PublicInnerClass")
     public static class File extends FileFieldTranslator
     {
         /**
@@ -168,7 +167,6 @@ public class FileFieldTranslator implements Translator<java.io.File, JFileField>
      * @version 1.0.0, 28 May 2013
      * @since 1.0.0
      */
-    @SuppressWarnings("PublicInnerClass")
     public static class Directory extends FileFieldTranslator
     {
         /**

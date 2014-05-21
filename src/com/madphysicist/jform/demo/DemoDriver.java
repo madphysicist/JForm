@@ -378,7 +378,6 @@ public class DemoDriver extends JFrame
 
         okButton = new JButton("OK");
         okButton.addActionListener(new ActionListener() {
-            @Override@SuppressWarnings({"CallToThreadDumpStack", "UseOfSystemOutOrSystemErr", "UseSpecificCatch"})
             public void actionPerformed(ActionEvent e) {
                 try {
                     String selection = typeCombo.getSelectedItem().toString();
@@ -467,7 +466,7 @@ public class DemoDriver extends JFrame
 
     /**
      * Initializes the window for display. The window is given a title, made
-     * resizable and set to close when the "X" button is pressed. {@link
+     * resizeable and set to close when the "X" button is pressed. {@link
      * #okButton} is set as the default button for the frame. This method does
      * not make the window visible.
      *
@@ -544,7 +543,6 @@ public class DemoDriver extends JFrame
 
         // Create and display the form
         EventQueue.invokeLater(new Runnable() {
-            @SuppressWarnings({"CallToThreadDumpStack", "UseOfSystemOutOrSystemErr"})
             public void run()
             {
                 try {

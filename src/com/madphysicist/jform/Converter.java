@@ -522,7 +522,6 @@ public class Converter<T, U extends Component> implements Serializable
         return readValue(true);
     }
 
-    @SuppressWarnings("unchecked")
     public T readValue(boolean notify) throws TranslatorException
     {
         try {
@@ -541,7 +540,6 @@ public class Converter<T, U extends Component> implements Serializable
         return readString(true);
     }
 
-    @SuppressWarnings("unchecked")
     public String readString(boolean notify) throws TranslatorException
     {
         try {
@@ -555,13 +553,11 @@ public class Converter<T, U extends Component> implements Serializable
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void writeValue(Object value) throws TranslatorException
     {
         translator.writeValue(value, component);
     }
 
-    @SuppressWarnings("unchecked")
     public boolean checkValue(boolean mark)
     {
         try {
