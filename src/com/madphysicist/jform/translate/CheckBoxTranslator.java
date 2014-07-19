@@ -1,5 +1,5 @@
 /*
- * CheckBoxTranslator.java
+ * CheckBoxTranslator.java (Class: com.madphysicist.jform.translate.CheckBoxTranslator)
  *
  * Mad Physicist JForm Project
  *
@@ -25,7 +25,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package com.madphysicist.jform.translate;
 
 import javax.swing.JCheckBox;

@@ -1,5 +1,5 @@
 /*
- * TranslatorComponentException.java
+ * TranslatorComponentException.java (Class: com.madphysicist.jform.translate.TranslatorComponentException)
  *
  * Mad Physicist JForm Project
  *
@@ -25,7 +25,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package com.madphysicist.jform.translate;
 
 import java.awt.Component;

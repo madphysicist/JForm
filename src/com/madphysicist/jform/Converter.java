@@ -1,5 +1,5 @@
 /*
- * JConfigPanel.java
+ * Converter.java (Package: com.madphysicist.jform.Converter)
  *
  * Mad Physicist JForm Project
  *
@@ -25,7 +25,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package com.madphysicist.jform;
 
 import java.awt.Color;

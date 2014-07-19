@@ -1,5 +1,5 @@
 /*
- * package-info.java
+ * package-info.java (Pacakge: com.madphysicist.jform.translate)
  *
  * Mad Physicist JForm Project
  *
