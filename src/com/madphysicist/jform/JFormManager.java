@@ -44,6 +44,7 @@ import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
+
 import com.madphysicist.jform.translate.TranslatorComponentException;
 import com.madphysicist.jform.translate.TranslatorException;
 import com.madphysicist.jform.translate.Translator;
@@ -1686,7 +1687,7 @@ public class JFormManager implements Serializable
         private static final long serialVersionUID = 1000L;
 
         /**
-         * The name of the property. May be retrived by {@link #getName()}.
+         * The name of the property. May be retrieved by {@link #getName()}.
          *
          * @since 1.0.0
          */
@@ -1820,16 +1821,18 @@ public class JFormManager implements Serializable
             this.listeners = new HashSet<>(componentConfig.getListeners());
         }
 
-        /* *
-         * Returns the name of the property.
+        /**
+         * Returns the name of the property. Not that this method is not used internally by {@code JFormManager} because
+         * it always stores nodes in a map keyed by name.
          *
          * @return the name of the property.
          * @since 1.0.0
-         * /
+         */
+        @SuppressWarnings("unused")
         public String getName()
         {
             return this.name;
-        }*/
+        }
 
         /**
          * Returns the current value of the property.
