@@ -31,8 +31,8 @@
 <!--
   The main build file for the JForm project. Type "ant -projecthelp" for a
   listing of the available targets. The project build and documentation can be
-  run with the "all" target. There are currently no test targets.
-
+  run with the "all" target. Testing is done with TestNG using the "test"
+  target. The demo can be run with the "run-demo" target.
 
   Set the value of the "DEBUG" property near the top of this file to determine
   whether the library will be compiled in debug mode or not. The "DEBUG-test"
@@ -41,35 +41,32 @@
 
   Author:   Joseph Fox-Rabinovitz
   Version:  1.0.0, 12 Nov 2013
+  Version:  2.0.0, 26 Aug 2014 - J. Fox-Rabinovitz - Updated with more dynamic dependency configuration.
   Since:    1.0.0
 -->
 
 <project name="JForm" default="all" basedir=".">
 
-    <description>Builds, documents and demos JForm.</description>
+    <description>Builds, documents, tests and demos JForm.</description>
 
     <property name="DEBUG" value="true" />
     <property name="DEBUG-test" value="${DEBUG}" />
 
-    <property file="build.properties" />
-
-    <path id="dependencies">
-        <pathelement location="${jtools.jar.file}" />
-    </path>
+    <import file="config/setup.xml"/>
 
     <!-- Library Build Targets -->
 
-    <target name="clean" depends="clean-compile,clean-doc,clean-jar"
-            description="removes all build artifacts, including documentation">
+    <target name="clean" depends="clean-compile,clean-doc,clean-jar,clean-test"
+            description="removes all build artifacts, including test and documentation">
         <delete dir="${build.dir}" />
         <delete dir="${dist.dir}" />
         <delete dir="${jar.dir}" />
     </target>
 
-    <target name="compile"
+    <target name="compile" depends="compile-init"
             description="compiles the library source code into class files">
         <mkdir dir="${classes.dir}" />
-        <javac classpathref="dependencies"
+        <javac classpathref="compile-lib"
                srcdir="${src.dir}"
                destdir="${classes.dir}"
                excludes="**/package-info.java"
@@ -88,7 +85,7 @@
     </target>
 
     <target name="jar" depends="compile"
-            description="bundles the compiled classes into a jar file">
+            description="bundles the compiled library classes into a jar file">
         <mkdir dir="${jar.dir}" />
         <jar destfile="${jar.file}"
              basedir="${classes.dir}"
@@ -109,7 +106,6 @@
         <mkdir dir="${doc.dir}" />
         <javadoc sourcepath="${src.dir}"
                  destdir="${doc.dir}"
-                 classpath="${classes.dir}"
                  access="private"
                  encoding="UTF-8"
                  version="true"
@@ -124,16 +120,15 @@
             <bottom><![CDATA[Copyright &copy; 2013 by Joseph Fox-Rabinovitz under the MIT License]]></bottom>
             <link href="http://docs.oracle.com/javase/7/docs/api/" offline="false" />
             <!-- TODO: Include stable link to JTools javadocs /-->
-            <sourcepath location="${src.dir}" />
             <classpath>
-                <path refid="dependencies" />
+                <path refid="compile-lib" />
                 <path location="${classes.dir}" />
             </classpath>
         </javadoc>
     </target>
 
-    <target name="clean-doc" depends="clean-doc-jar"
-            description="removes javadoc documentation of the the classes">
+    <target name="clean-doc"
+            description="removes javadoc documentation of the the library classes">
         <delete dir="${doc.dir}" />
     </target>
 
@@ -167,19 +162,108 @@
             description="runs the demo application">
         <java fork="true" classname="${demo.class}">
             <classpath>
-                <pathelement location="${jar.file}" />
-                <path refid="dependencies" />
+                <path refid="compile-lib" />
+                <path location="${jar.file}" />
             </classpath>
         </java>
+    </target>
+
+    <!-- Test Build Targets -->
+
+    <target name="clean-test" depends="clean-testng">
+        <delete dir="${test.classes.dir}" />
+        <delete dir="${test.doc.dir}" />
+        <delete dir="${test.reports.dir}" />
+    </target>
+
+    <target name="compile-test" depends="compile,compile-test-init"
+            description="compiles the test source code into class files">
+        <mkdir dir="${test.classes.dir}" />
+
+        <javac srcdir="${test.src.dir}"
+               destdir="${test.classes.dir}"
+               debug="${DEBUG-test}"
+               excludes="**/package-info.java"
+               includeantruntime="false"
+               classpathref="compile-test-lib" />
+        <copy todir="${test.classes.dir}">
+            <fileset dir="${test.src.dir}" excludes="**/*.java,**/*.xml"/>
+        </copy>
+
+    </target>
+
+    <target name="clean-compile-test"
+            description="removes all compiled test classes">
+        <delete dir="${test.classes.dir}" />
+    </target>
+
+    <target name="doc-test" depends="compile,compile-test,doc"
+            description="creates javadoc documentation of the test classes">
+        <mkdir dir="${test.doc.dir}" />
+        <javadoc sourcepath="${test.src.dir}"
+                 destdir="${test.doc.dir}"
+                 access="private"
+                 encoding="UTF-8"
+                 version="true"
+                 author="true"
+                 windowtitle="JForm Project - Test Suite Developer Documentation"
+                 source="1.7"
+                 serialwarn="true"
+                 use="true">
+            <doctitle><![CDATA[JForm Project<br />API Specification]]></doctitle>
+            <header><![CDATA[<b>JForm Project<br />Test Suite</b>]]></header>
+            <footer><![CDATA[<b>JForm Project<br />Test Suite</b>]]></footer>
+            <bottom><![CDATA[Copyright &copy; 2013 by Joseph Fox-Rabinovitz under the MIT License]]></bottom>
+            <link href="http://docs.oracle.com/javase/7/docs/api/" offline="false" />
+            <link href="http://testng.org/javadoc/" offline="false" />
+            <link href="../../dist/javadoc/" />
+            <!-- TODO: Include stable link to JTools javadocs /-->
+            <classpath>
+                <path refid="compile-test-lib" />
+                <path location="${test.classes.dir}" />
+            </classpath>
+        </javadoc>
+    </target>
+
+    <target name="clean-doc-test"
+            description="removes javadoc documentation of the test classes">
+        <delete dir="${test.doc.dir}" />
+    </target>
+
+    <!-- Test Run Targets -->
+
+    <target name="testng" depends="compile-test,testng-init"
+            description="runs a TestNG unit test suite on the library classes">
+
+        <mkdir dir="${test.testng.out.dir}" />
+        <testng outputdir="${test.testng.out.dir}" classpathref="test-lib">
+            <xmlfileset file="${test.testng.file}" />
+        </testng>
+    </target>
+
+    <target name="testng-failed" if="test.testng.failed.available"
+            depends="compile-test,testng-init,testng-failed-init"
+            description="reruns only the failed TestNG unit tests from a pervious run">
+        <testng outputdir="${test.testng.out.dir}" classpathref="test-lib">
+            <xmlfileset file="${test.testng.failed.xml.file}" />
+        </testng>
+    </target>
+
+    <target name="clean-testng" description="removes TestNG artifacts">
+        <delete file="${test.testng.failed.xml.file}" />
+        <delete dir="${test.testng.out.dir}" />
     </target>
 
     <!-- Meta-Targets -->
 
     <target name="rebuild" depends="clean-compile,clean-jar,jar"
-            description="rebuilds the jar from scratch after a clean" />
+            description="rebuilds the library jar from scratch after a clean" />
 
     <target name="all" depends="clean,jar,doc-jar,src-jar"
             description="cleans the project and creates all build, distribution, source, and documentation artifacts" />
+
+    <target name="test" depends="testng"
+            description="creates reports from the unit tests (static and coverage are coming)" />
 
 </project>
 

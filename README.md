@@ -20,8 +20,8 @@ Read through and run the demo in `com.madphysicist.jform.demo` package. The code
 
 The Javadocs for the packages are not complete yet, but the main classes are pretty well documented.
 
-Notes on Dependencies
----------------------
+Dependencies
+------------
 
 This project depends on the Mad Physicist JTools project. The JTools jar file must be on the classpath when building and running the JForm project.
 
