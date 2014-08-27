@@ -1,7 +1,7 @@
 ##
 ## .gitignore
 ##
-## JForm Project
+## Mad Physicist JForm Project
 ##
 ## The MIT License (MIT)
 ##
@@ -27,17 +27,14 @@
 ##
 
 ##
-## List of files and directories to be ignored by git
+## List of files and directories to be ignored by git. Note that 
 ##
 ## Author:   Joseph Fox-Rabinovitz
-## Version:  1.0.0, 12 Nov 2013: Joseph Fox-Rabinovitz: Created
+## Version:  1.0.0, 12 Nov 2013: Joseph Fox-Rabinovitz: Created.
+## Version:  1.1.0, 26 Aug 2014: Joseph Fox-Rabinovitz: Removed references to NetBeans.
 ##
 
 build/
 dist/
 lib/
-
-.netbeans/build/
-.netbeans/dist/
-.netbeans/nbproject/private/
 

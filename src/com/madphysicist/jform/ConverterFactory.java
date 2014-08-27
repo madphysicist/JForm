@@ -1,5 +1,5 @@
 /*
- * ConverterFactory.java (Package: com.madphysicist.jform.ConverterFactory)
+ * ConverterFactory.java (Class: com.madphysicist.jform.ConverterFactory)
  *
  * Mad Physicist JForm Project
  *

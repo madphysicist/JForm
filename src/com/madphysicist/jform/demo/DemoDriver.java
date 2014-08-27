@@ -63,7 +63,7 @@ import com.madphysicist.tools.swing.JFileField;
 import com.madphysicist.tools.swing.TogglePanel;
 
 /**
- * A demo of the {@code joe.tools.config} package. The user can edit the values
+ * A demo of the {@code com.madphysicist.jform} package. The user can edit the values
  * in any of a selection of form fields. Entering invalid values is recommended
  * to demonstrate the markup features provided by {@code Converter}. The basic
  * output options provided by {@code JFormManager} are available as well. This
@@ -72,7 +72,8 @@ import com.madphysicist.tools.swing.TogglePanel;
  * this class is required to be on the class path for the program to run.
  *
  * @author Joseph Fox-Rabinovitz
- * @version 1.0.0, 25 May 2013: Joseph Fox-Rabinovitz: Created
+ * @version 1.0.0, 25 May 2013: Joseph Fox-Rabinovitz: Initial coding.
+ * @since 1.0
  */
 public class DemoDriver extends JFrame
 {

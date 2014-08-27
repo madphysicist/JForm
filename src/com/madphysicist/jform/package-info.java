@@ -33,7 +33,7 @@
  * <p>
  * {@code Converter} objects define a two way relationship between the UI
  * component and the underlying data that is extracted from it. It allows errors
- * to be marked on the components by changing the forground and/or background
+ * to be marked on the components by changing the foreground and/or background
  * colors of the component itself and surrounding components.
  * <p>
  * {@code Converter} uses an underlying {@code Translator} instance to convert

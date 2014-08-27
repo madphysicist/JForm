@@ -31,6 +31,6 @@
  * executable and the properties file it requires.
  *
  * @author Joseph Fox-Rabinovitz
- * @version 1.0.0, 25 May 2013: Joseph Fox-Rabinovitz: Created
+ * @version 1.0, 25 May 2013: Joseph Fox-Rabinovitz: Created
  */
 package com.madphysicist.jform.demo;

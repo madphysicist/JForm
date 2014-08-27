@@ -40,8 +40,8 @@
   to the same value as "DEBUG".
 
   Author:   Joseph Fox-Rabinovitz
-  Version:  1.0.0.0, 12 Nov 2013
-  Since:    1.0.0.0
+  Version:  1.0.0, 12 Nov 2013
+  Since:    1.0.0
 -->
 
 <project name="JForm" default="all" basedir=".">
@@ -54,7 +54,7 @@
     <property file="build.properties" />
 
     <path id="dependencies">
-        <pathelement location="${tools.jar.file}" />
+        <pathelement location="${jtools.jar.file}" />
     </path>
 
     <!-- Library Build Targets -->
@@ -88,7 +88,7 @@
     </target>
 
     <target name="jar" depends="compile"
-            description="bundles the compiled classes into an executable jar file">
+            description="bundles the compiled classes into a jar file">
         <mkdir dir="${jar.dir}" />
         <jar destfile="${jar.file}"
              basedir="${classes.dir}"
@@ -123,6 +123,7 @@
             <footer><![CDATA[<b>JForm Project<br />Library</b>]]></footer>
             <bottom><![CDATA[Copyright &copy; 2013 by Joseph Fox-Rabinovitz under the MIT License]]></bottom>
             <link href="http://docs.oracle.com/javase/7/docs/api/" offline="false" />
+            <!-- TODO: Include stable link to JTools javadocs /-->
             <sourcepath location="${src.dir}" />
             <classpath>
                 <path refid="dependencies" />

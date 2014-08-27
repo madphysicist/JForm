@@ -1,5 +1,5 @@
 /*
- * JFormManager.java (Package: com.madphysicist.jform.JFormManager)
+ * JFormManager.java (Class: com.madphysicist.jform.JFormManager)
  *
  * Mad Physicist JForm Project
  *
